@@ -1,0 +1,102 @@
+<!doctype html>
+<meta charset="utf-8">
+<title> IRC </title>
+
+<style>
+html, body, div, input {
+  margin: 0;
+  font-size: 1rem;
+  font-family: sans-serif;
+}
+#channel {
+  display: flex;
+  height: 100vh;
+  flex-direction: column;
+}
+#header {
+  background-color: black;
+  color: white;
+  height: 3rem;
+}
+#content {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  overflow-y: auto
+  border-top: 1px solid lightgrey;
+  border-bottom: 1px solid lightgrey;
+}
+#content > .message {
+  margin: 0;
+  padding: 0.3rem;
+}
+#content > .message:nth-child(even) {
+  background-color: rgba(50, 100, 255, 0.3);
+}
+#content > .message > .time {
+  color: grey; /* FIXME */
+}
+#footer {
+  height: 3rem;
+  display: flex;
+  align-items: center;
+}
+#footer > input {
+  height: 3rem;
+  box-sizing: border-box;
+  background-color: transparent;
+  border: 0;
+}
+#footer > input[type="submit"] {
+  width: 50px;
+  color: dimgrey;
+  font-size: 1.3rem;
+}
+#footer > input[type="text"] {
+  padding: 0.3rem;
+  flex: 1;
+}
+</style>
+
+<div id="channel">
+  <div id="header">le header</div>
+
+  <div id="content">
+    <p class="message">
+      <span class="time">12:34</span>
+      <span class="text">le texte</span>
+    </p>
+    <p class="message">
+      <span class="time">12:35</span>
+      <span class="text">le texte</span>
+    </p>
+  </div>
+
+  <form id="footer" action="javascript:void(0)">
+    <input type="text" name="message" placeholder="Message"></input>
+    <input type="submit" value="▶"></input>
+  </form>
+</div>
+
+<script>
+(function() {
+  var header = document.querySelector("#header"),
+      content = document.querySelector("#content"),
+      footer = document.querySelector("#footer");
+
+  footer.addEventListener("submit", function() {
+    var p = document.createElement("p"),
+        time = document.createElement("span"),
+        text = document.createElement("span");
+    p.classList.add("message");
+    time.classList.add("time");
+    time.textContent = new Date().toTimeString().slice(0,5);
+    text.classList.add("text");
+    text.textContent = " " + footer.message.value; 
+    p.appendChild(time);
+    p.appendChild(text);
+    content.appendChild(p);
+    return false;
+  });
+})();
+</script>
