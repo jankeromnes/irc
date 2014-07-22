@@ -1,56 +1,76 @@
 <!doctype html>
 <meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
 <title> IRC </title>
 
 <style>
 html, body, div, input {
   margin: 0;
-  font-size: 1rem;
+  font-size: 0.95rem;
   font-family: sans-serif;
 }
-#channel {
+#app {
   display: flex;
   height: 100vh;
   flex-direction: column;
 }
 #header {
-  background-color: black;
-  color: white;
+  background-color: #d9e7ff;
+  color: #444;
   height: 3rem;
+  display: flex;
+  border-bottom: 2px solid lightgrey;
+}
+#header > .channel {
+  margin: 0;
+  padding: 0.3rem;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+#header > .channel > .name {
+  font-size: 1.2rem;
 }
 #content {
   display: flex;
   flex: 1;
   flex-direction: column;
   overflow-y: auto
-  border-top: 1px solid lightgrey;
-  border-bottom: 1px solid lightgrey;
 }
 #content > .message {
   margin: 0;
   padding: 0.3rem;
 }
-#content > .message:nth-child(even) {
-  background-color: rgba(50, 100, 255, 0.3);
+#content > .message.self {
+  background-color: #e2edff;
+}
+#content > .message.highlight {
+  background-color: #c0dbff;
 }
 #content > .message > .time {
-  color: grey; /* FIXME */
+  color: #aaa;
+}
+#content > .message > .nick {
+  font-weight: 700;
+  color: #222;
 }
 #footer {
   height: 3rem;
   display: flex;
   align-items: center;
+  border-top: 1px solid lightgrey;
 }
 #footer > input {
   height: 3rem;
   box-sizing: border-box;
-  background-color: transparent;
+  background: transparent;
   border: 0;
 }
 #footer > input[type="submit"] {
   width: 50px;
+  padding: 0;
   color: dimgrey;
-  font-size: 1.3rem;
+  font-size: 2rem;
 }
 #footer > input[type="text"] {
   padding: 0.3rem;
@@ -58,16 +78,23 @@ html, body, div, input {
 }
 </style>
 
-<div id="channel">
-  <div id="header">le header</div>
+<div id="app">
+  <div id="header">
+    <p class="channel">
+      <span class="name">#channel</span>
+      <span class="description">le awesome channel</span>
+    </p>
+  </div>
 
   <div id="content">
     <p class="message">
       <span class="time">12:34</span>
+      <span class="nick">Joe</span>
       <span class="text">le texte</span>
     </p>
-    <p class="message">
+    <p class="message highlight">
       <span class="time">12:35</span>
+      <span class="nick">Lara</span>
       <span class="text">le texte</span>
     </p>
   </div>
@@ -87,13 +114,18 @@ html, body, div, input {
   footer.addEventListener("submit", function() {
     var p = document.createElement("p"),
         time = document.createElement("span"),
+        nick = document.createElement("span"),
         text = document.createElement("span");
     p.classList.add("message");
     time.classList.add("time");
-    time.textContent = new Date().toTimeString().slice(0,5);
+    time.textContent = new Date().toTimeString().slice(0,5) + " ";
+    nick.classList.add("nick");
+    nick.textContent = "Test" + " ";
     text.classList.add("text");
-    text.textContent = " " + footer.message.value; 
+    text.textContent = footer.message.value;
+    footer.message.value = "";
     p.appendChild(time);
+    p.appendChild(nick);
     p.appendChild(text);
     content.appendChild(p);
     return false;

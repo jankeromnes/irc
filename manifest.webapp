@@ -1,0 +1,14 @@
+{
+  "name": "IRC",
+  "description": "fast & lightweight irc client",
+  "launch_path": "/index.html",
+  "developer": {
+    "name": "Jan Keromnes",
+    "url": "https://github.com/jankeromnes/irc"
+  },
+  "permissions": {},
+  "installs_allowed_from": ["*"],
+  "icons": {
+    "128": "/images/icon128.png"
+  }
+}
