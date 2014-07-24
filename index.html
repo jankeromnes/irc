@@ -35,11 +35,13 @@ html, body, div, input {
   display: flex;
   flex: 1;
   flex-direction: column;
-  overflow-y: auto
+  justify-content: flex-end;
+  overflow-y: auto;
 }
 #content > .message {
   margin: 0;
   padding: 0.3rem;
+  flex-shrink: 0;
 }
 #content > .message.self {
   background-color: #e2edff;
