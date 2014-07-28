@@ -8,6 +8,7 @@ html, body, div, input {
   margin: 0;
   font-size: 0.95rem;
   font-family: sans-serif;
+  background: white;
 }
 #app {
   display: flex;
@@ -19,7 +20,6 @@ html, body, div, input {
   color: #444;
   height: 3rem;
   display: flex;
-  border-bottom: 2px solid lightgrey;
 }
 #header > .channel {
   margin: 0;
@@ -36,23 +36,28 @@ html, body, div, input {
   flex: 1;
   flex-direction: column;
   justify-content: flex-end;
-  overflow-y: auto;
+  height: 100%;
 }
-#content > .message {
+#messages {
+  flex-direction: column;
+  overflow: auto;
+  max-height: 100%;
+}
+#messages > .message {
   margin: 0;
   padding: 0.3rem;
-  flex-shrink: 0;
+  flex: none;
 }
-#content > .message.self {
+#messages > .message.self {
   background-color: #e2edff;
 }
-#content > .message.highlight {
+#messages > .message.highlight {
   background-color: #c0dbff;
 }
-#content > .message > .time {
+#messages > .message > .date {
   color: #aaa;
 }
-#content > .message > .nick {
+#messages > .message > .nick {
   font-weight: 700;
   color: #222;
 }
@@ -60,7 +65,6 @@ html, body, div, input {
   height: 3rem;
   display: flex;
   align-items: center;
-  border-top: 1px solid lightgrey;
 }
 #footer > input {
   height: 3rem;
@@ -89,16 +93,18 @@ html, body, div, input {
   </div>
 
   <div id="content">
-    <p class="message">
-      <span class="time">12:34</span>
-      <span class="nick">Joe</span>
-      <span class="text">le texte</span>
-    </p>
-    <p class="message highlight">
-      <span class="time">12:35</span>
-      <span class="nick">Lara</span>
-      <span class="text">le texte</span>
-    </p>
+    <div id="messages">
+      <p class="message">
+        <span class="date">12:34</span>
+        <span class="nick">Joe</span>
+        <span class="text">le texte</span>
+      </p>
+      <p class="message highlight">
+        <span class="date">12:35</span>
+        <span class="nick">Lara</span>
+        <span class="text">le texte</span>
+      </p>
+    </div>
   </div>
 
   <form id="footer" action="javascript:void(0)">
@@ -109,27 +115,34 @@ html, body, div, input {
 
 <script>
 (function() {
-  var header = document.querySelector("#header"),
-      content = document.querySelector("#content"),
+  var msg = document.querySelector("#messages"),
       footer = document.querySelector("#footer");
 
-  footer.addEventListener("submit", function() {
+  function addMessage(date, nick, text) {
     var p = document.createElement("p"),
-        time = document.createElement("span"),
-        nick = document.createElement("span"),
-        text = document.createElement("span");
+        d = document.createElement("span"),
+        n = document.createElement("span"),
+        t = document.createElement("span");
+
     p.classList.add("message");
-    time.classList.add("time");
-    time.textContent = new Date().toTimeString().slice(0,5) + " ";
-    nick.classList.add("nick");
-    nick.textContent = "Test" + " ";
-    text.classList.add("text");
-    text.textContent = footer.message.value;
+    d.classList.add("date");
+    d.textContent = date.toTimeString().slice(0,5) + " ";
+    n.classList.add("nick");
+    n.textContent = nick + " ";
+    t.classList.add("text");
+    t.textContent = text;
+    p.appendChild(d);
+    p.appendChild(n);
+    p.appendChild(t);
+
+    var snap = (msg.scrollHeight - msg.scrollTop <= msg.clientHeight);
+    msg.appendChild(p);
+    if (snap) msg.scrollTop = msg.scrollHeight;
+  }
+
+  footer.addEventListener("submit", function() {
+    addMessage(new Date(), "Tester", footer.message.value);
     footer.message.value = "";
-    p.appendChild(time);
-    p.appendChild(nick);
-    p.appendChild(text);
-    content.appendChild(p);
     return false;
   });
 })();
