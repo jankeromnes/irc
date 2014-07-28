@@ -10,6 +10,23 @@ html, body, div, input {
   font-family: sans-serif;
   background: white;
 }
+.icon {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  width: 50px;
+  color: #222;
+  font-family: arial;
+  font-size: 2rem;
+  text-align: center;
+  background: transparent;
+}
+.icon:focus {
+  outline: none;
+}
+.icon::-moz-focus-inner {
+  border: 0;
+}
 #app {
   display: flex;
   height: 100vh;
@@ -17,7 +34,7 @@ html, body, div, input {
 }
 #header {
   background-color: #d9e7ff;
-  color: #444;
+  color: #222;
   height: 3rem;
   display: flex;
 }
@@ -26,10 +43,14 @@ html, body, div, input {
   padding: 0.3rem;
   display: flex;
   flex-direction: column;
+  flex: 1;
   overflow: hidden;
 }
 #header > .channel > .name {
   font-size: 1.2rem;
+}
+#header > .back.icon {
+  order: -1;
 }
 #content {
   display: flex;
@@ -72,12 +93,6 @@ html, body, div, input {
   background: transparent;
   border: 0;
 }
-#footer > input[type="submit"] {
-  width: 50px;
-  padding: 0;
-  color: dimgrey;
-  font-size: 2rem;
-}
 #footer > input[type="text"] {
   padding: 0.3rem;
   flex: 1;
@@ -90,6 +105,8 @@ html, body, div, input {
       <span class="name">#channel</span>
       <span class="description">le awesome channel</span>
     </p>
+    <button onclick="alert('channels')" class="back icon">‹</button>
+    <button onclick="alert('settings')" class="icon">…</button>
   </div>
 
   <div id="content">
@@ -109,7 +126,7 @@ html, body, div, input {
 
   <form id="footer" action="javascript:void(0)">
     <input type="text" name="message" placeholder="Message"></input>
-    <input type="submit" value="▶"></input>
+    <input type="submit" class="icon" value="▶"></input>
   </form>
 </div>
 
