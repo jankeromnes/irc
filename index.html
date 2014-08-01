@@ -14,7 +14,7 @@ html, body, div, input {
   border: 0;
   margin: 0;
   padding: 0;
-  width: 50px;
+  width: 3rem;
   color: #222;
   font-family: arial;
   font-size: 2rem;
@@ -97,6 +97,39 @@ html, body, div, input {
   padding: 0.3rem;
   flex: 1;
 }
+#actions, #networks {
+  position: absolute;
+  top: 3rem;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  background-color: whitesmoke;
+}
+#actions {
+  right: 0;
+}
+#actions > a {
+  padding: 1rem;
+}
+#networks {
+  left: 0;
+  background-color: #d9e7ff;
+  color: #222;
+}
+#networks > .network {
+  display: flex;
+  flex-direction: column;
+}
+.network-header, .network-channel {
+  padding: 0.5rem;
+  color: #1d40ff;
+}
+.network-header {
+  background-color: #e2edff;
+}
+.network-channel {
+  background-color: #f2f7fc
+}
 </style>
 
 <div id="app">
@@ -105,8 +138,8 @@ html, body, div, input {
       <span class="name">#channel</span>
       <span class="description">le awesome channel</span>
     </p>
-    <button onclick="alert('channels')" class="back icon">‹</button>
-    <button onclick="alert('settings')" class="icon">…</button>
+    <button onclick="alert('networks')" class="back icon">‹</button>
+    <button onclick="alert('actions')" class="icon">…</button>
   </div>
 
   <div id="content">
@@ -126,9 +159,27 @@ html, body, div, input {
 
   <form id="footer" action="javascript:void(0)">
     <input type="text" name="message" placeholder="Message"></input>
-    <input type="submit" class="icon" value="▶"></input>
+    <input type="submit" class="icon" value="›"></input>
   </form>
+
+  <div id="networks">
+    <div class="network">
+      <a class="network-header">
+        <span class="network-name">Freenode</span>
+      </a>
+      <a class="network-channel" onclick="alert('channel')">
+        <span class="channel-name">#channel</span>
+      </a>
+    </div>
+  </div>
+
+  <div id="actions">
+    <a onclick="alert('leave')">Leave</a>
+    <a onclick="alert('settings')">Settings</a>
+    <a onclick="alert('logout')">Logout</a>
+  </div>
 </div>
+
 
 <script>
 (function() {
